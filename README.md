@@ -24,6 +24,23 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 
 2. **Import Collections and Workspaces**: Download the Postman collection and workspaces files from this repo and import them into Postman.
        
+    ```bash
+    git clone https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL.git
+    ```
+
+3. **Install Node.js**: If you haven't already, install [Node.js](https://nodejs.org/) on your system.
+
+4. **Install Newman**: After Node.js is installed, you can install Newman globally using npm. Open your terminal and run the following command:
+
+    ```bash
+    npm install -g newman
+    ```
+
+    This will install Newman globally on your system, allowing you to run the command `newman` from any directory in your terminal.
+
+5.**Run the collection**: You can run all the tests with this command:
+
  ```bash
-   git clone https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL.git
- ```
+   newman run "TestsSwapiGrapQL.postman_collection.json"
+    ```
+
