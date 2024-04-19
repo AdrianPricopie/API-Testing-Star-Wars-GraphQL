@@ -15,4 +15,14 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 # Resources
 
 - [Postman documentation](https://learning.postman.com/docs/introduction/overview/)
-- [App api GraphQL documentation](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home)
+- [App api graphQL documentation](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home)
+
+## Configuration
+
+1. **Install Postman**: Make sure you have [Postman](https://www.postman.com/downloads/) installed on your system.
+
+2. **Import Collections and Workspaces**: Download the Postman collection and workspaces files from this repo and import them into Postman.
+       
+ ```bash
+   git clone https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL.git
+ ```
