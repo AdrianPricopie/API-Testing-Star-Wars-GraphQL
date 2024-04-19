@@ -16,6 +16,7 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 
 - [Postman documentation](https://learning.postman.com/docs/introduction/overview/)
 - [App api graphQL documentation](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home)
+- [GraphQL documentation](https://graphql.org/learn/)
 
 ## Configuration
 
