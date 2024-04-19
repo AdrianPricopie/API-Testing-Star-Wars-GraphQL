@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "1b906005-e31b-4203-b94a-52eb41b7fc78",
+		"name": "TestsSwapiGrapQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33933428"
+	},
+	"item": [
+		{
+			"name": "Test_All_Films",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Query is successful', function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.have.statusCode(200)",
+							"});",
+							"pm.test('Response has expected property', function () {",
+							"    pm.expect(pm.response.json().data).to.have.property(\"allFilms\")",
+							"});",
+							"pm.test('Response contains correct number of films', function () {",
+							"    const responseBody = pm.response.json()",
+							"    pm.expect(responseBody.data.allFilms.edges.length).to.equal(6);",
+							"});",
+							"pm.test('Each film has correct fields', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    films.forEach(film => {",
+							"        pm.expect(film.node).to.have.all.keys('title', 'episodeID', 'openingCrawl', 'director', 'producers', 'releaseDate', 'created', 'edited', 'id');",
+							"    });",
+							"});",
+							"// Verificați dacă datele filmului sunt valide",
+							"pm.test('Each film has valid data', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    films.forEach(film => {",
+							"        // Verificați data de lansare",
+							"        pm.expect(film.node.releaseDate).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+							"        ",
+							"        // Verificați dacă titlul și descrierea filmului nu sunt goale",
+							"        pm.expect(film.node.title).to.not.be.empty;",
+							"        pm.expect(film.node.openingCrawl).to.not.be.empty;",
+							"    });",
+							"});",
+							"pm.test('Films are in expected order', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    const expectedOrder = [\"A New Hope\", \"The Empire Strikes Back\", \"Return of the Jedi\", \"The Phantom Menace\", \"Attack of the Clones\", \"Revenge of the Sith\"];",
+							"    films.forEach((film, index) => {",
+							"        pm.expect(film.node.title).to.equal(expectedOrder[index]);",
+							"    });",
+							"});",
+							"pm.test('Fields are of correct type', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    films.forEach(film => {",
+							"        pm.expect(film.node.episodeID).to.be.a('number');",
+							"        pm.expect(film.node.releaseDate).to.be.a('string');",
+							"        pm.expect(film.node.created).to.be.a('string');",
+							"        pm.expect(film.node.edited).to.be.a('string');",
+							"    })",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query AllFilms {\n    allFilms {\n        totalCount\n        edges {\n            node {\n                title\n                episodeID\n                openingCrawl\n                director\n                producers\n                releaseDate\n                created\n                edited\n                id\n            }\n        }\n    }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+					"protocol": "https",
+					"host": [
+						"swapi-graphql",
+						"netlify",
+						"app"
+					],
+					"path": [
+						".netlify",
+						"functions",
+						"index"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test_All_film_with_parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Query is successful', function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.have.statusCode(200)",
+							"});",
+							"pm.test('Response has expected property', function () {",
+							"    pm.expect(pm.response.json().data).to.have.property(\"allFilms\")",
+							"});",
+							"pm.test('Response contains correct number of films', function () {",
+							"    const responseBody = pm.response.json()",
+							"    pm.expect(responseBody.data.allFilms.edges.length).to.equal(2);",
+							"});",
+							"pm.test('Fields are of correct type', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    films.forEach(film => {",
+							"        pm.expect(film.node.episodeID).to.be.a('number');",
+							"        pm.expect(film.node.releaseDate).to.be.a('string');",
+							"        pm.expect(film.node.created).to.be.a('string');",
+							"        pm.expect(film.node.edited).to.be.a('string');",
+							"    })",
+							"});",
+							"",
+							"pm.test('Verify title for every film', function () {",
+							"    const films = pm.response.json().data.allFilms.edges;",
+							"    ",
+							"    // Verify first film",
+							"    pm.expect(films[0].node.title).to.include(\"New Hope\");",
+							"",
+							"    // Verifiy second film",
+							"    pm.expect(films[1].node.title).to.include(\"The Empire Strikes Back\")",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query AllFilms {\n    allFilms(first: 2) {\n        edges {\n            node {\n                title\n                episodeID\n                openingCrawl\n                director\n                producers\n                releaseDate\n                created\n                edited\n                id\n            }\n        }\n    }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+					"protocol": "https",
+					"host": [
+						"swapi-graphql",
+						"netlify",
+						"app"
+					],
+					"path": [
+						".netlify",
+						"functions",
+						"index"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "negative_test_for_all_films",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verifiy status code ', function () {",
+							"    pm.response.to.have.statusCode(400)",
+							"});",
+							"pm.test('Verify error message', function () {",
+							"    const error = pm.response.json().errors[0];",
+							"    // Verifică mesajul de eroare",
+							"    pm.expect(error.message).to.equal(\"Expected type Int, found \\\"2.0\\\".\");",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query AllFilms {\n    allFilms(first: \"2.0\") {\n        totalCount\n    }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+					"protocol": "https",
+					"host": [
+						"swapi-graphql",
+						"netlify",
+						"app"
+					],
+					"path": [
+						".netlify",
+						"functions",
+						"index"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query_film_with_positive_id_parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Query is successful', function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.have.statusCode(200)",
+							"});",
+							"pm.test('Response has expected property', function () {",
+							"    pm.expect(pm.response.json().data).to.have.property(\"film\")",
+							"});",
+							"pm.test('Verify title of film', function () {",
+							"   const title = pm.response.json().data.film.title",
+							"   pm.expect(title).to.equals(\"The Empire Strikes Back\")",
+							"});",
+							"pm.test('Verify id ', function () {",
+							"   const id = pm.response.json().data.film.id",
+							"   pm.expect(id).to.equals(\"ZmlsbXM6Mg==\")",
+							"});",
+							"pm.test('Fields are of correct type', function () {",
+							"    const film = pm.response.json().data.film",
+							"    pm.expect(film.episodeID).to.be.a('number');",
+							"    pm.expect(film.openingCrawl).to.be.a('string');",
+							"    pm.expect(film.created).to.be.a('string');",
+							"    pm.expect(film.director).to.be.a('string');",
+							"    pm.expect(film.producers).to.be.an('array');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Film($ValidId: ID!) {\n    film(id: $ValidId) {\n        episodeID\n        openingCrawl\n        director\n        producers\n        releaseDate\n        created\n        edited\n        id\n        title\n    }\n}",
+						"variables": "{\n    \"ValidId\" : \"ZmlsbXM6Mg==\"\n}"
+					}
+				},
+				"url": {
+					"raw": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+					"protocol": "https",
+					"host": [
+						"swapi-graphql",
+						"netlify",
+						"app"
+					],
+					"path": [
+						".netlify",
+						"functions",
+						"index"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query_film_with_invalid_id_paramter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verify Response', function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.have.statusCode(200)",
+							"});",
+							"pm.test('Verify error message for id ', function () {",
+							"    const error = pm.response.errors[0];",
+							"    // Verifică mesajul de eroare",
+							"    pm.expect(error.message).to.equal(\"No valid ID extracted from ZmlsbXM6Mg\");",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query Film($InvalidId: ID!) {\n    film(id: $InvalidId) {\n        title\n        episodeID\n        openingCrawl\n        director\n        producers\n        releaseDate\n        created\n        edited\n        id\n    }\n}",
+						"variables": "{\n \"InvalidId\":\"ZmlsbXM6Mg\"\n}"
+					}
+				},
+				"url": {
+					"raw": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+					"protocol": "https",
+					"host": [
+						"swapi-graphql",
+						"netlify",
+						"app"
+					],
+					"path": [
+						".netlify",
+						"functions",
+						"index"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
