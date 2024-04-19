@@ -4,7 +4,7 @@ This project utilizes Postman to perform automated tests on the Star Wars GraphQ
 
 ## Description 
 
-The application is intended for automated testing of the Star Wars GraphQL API. It uses Postman collections and workspaces to organize and execute tests for various aspects of the API, such as queries for films, characters, planets, etc
+The application is intended for automated testing of the Star Wars GraphQL API. It uses Postman collections and workspaces to organize and execute tests for various aspects of the API, such as queries for films, characters, planets, etc.
 
 ## Usage
 
@@ -12,7 +12,7 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 
 2. **Analyzing Results**: After tests have been run, analyze the results to verify that all requests were successfully executed and that API responses meet expectations.
 
-# Resources
+## Resources
 
 - [Postman documentation](https://learning.postman.com/docs/introduction/overview/)
 - [App api graphQL documentation](https://studio.apollographql.com/public/star-wars-swapi/variant/current/home)
@@ -23,7 +23,7 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 1. **Install Postman**: Make sure you have [Postman](https://www.postman.com/downloads/) installed on your system.
 
 2. **Import Collections and Workspaces**: Download the Postman collection and workspaces files from this repo and import them into Postman.
-       
+
     ```bash
     git clone https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL.git
     ```
@@ -38,9 +38,8 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
 
     This will install Newman globally on your system, allowing you to run the command `newman` from any directory in your terminal.
 
-5.**Run the collection**: You can run all the tests with this command:
+5. **Running the Collection**: You can run all the tests with this command:
 
- ```bash
+   ```bash
    newman run "TestsSwapiGrapQL.postman_collection.json"
-    ```
-
+   ```
