@@ -129,14 +129,14 @@ pm.test('Each film has correct fields', function () {
         pm.expect(film.node).to.have.all.keys('title', 'episodeID', 'openingCrawl', 'director', 'producers', 'releaseDate', 'created', 'edited', 'id');
     });
 });
-// Verificați dacă datele filmului sunt valide
+
 pm.test('Each film has valid data', function () {
     const films = pm.response.json().data.allFilms.edges;
     films.forEach(film => {
-        // Verificați data de lansare
+
         pm.expect(film.node.releaseDate).to.match(/^\d{4}-\d{2}-\d{2}$/);
         
-        // Verificați dacă titlul și descrierea filmului nu sunt goale
+      
         pm.expect(film.node.title).to.not.be.empty;
         pm.expect(film.node.openingCrawl).to.not.be.empty;
     });
