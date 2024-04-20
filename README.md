@@ -240,5 +240,5 @@ The test script encounters a TypeError instead of verifying the expected error m
 
 Screenshot
 
-![Bug](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/ForBug.png)
+![Bug](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/Bug.png)
 
