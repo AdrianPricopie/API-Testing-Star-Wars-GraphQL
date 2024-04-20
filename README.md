@@ -1,5 +1,4 @@
-# Star Wars GraphQL API Testing with Postman
-
+# Star Wars GraphQL API Testing with Postman  ![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
 This project utilizes Postman to perform automated tests on the Star Wars GraphQL API. It provides a simple and efficient way to verify certain functionalities and correctness of the Star Wars GraphQL API.
 
 ## Description 
