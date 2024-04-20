@@ -105,7 +105,7 @@ pm.test('Verify error message for id ', function () {
 ```
 ## 3.Query all films
 
-![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/README.md)
+![Query](QueryAllFilms.png)
 
 ### JavaScript Test Scripts
 
