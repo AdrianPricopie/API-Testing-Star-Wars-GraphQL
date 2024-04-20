@@ -157,5 +157,64 @@ pm.test('Fields are of correct type', function () {
         pm.expect(film.node.edited).to.be.a('string');
     })
 });
-
 ```
+# 4. Query all films with negative parameter 
+
+![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/NegativeTestParameter.png)
+
+
+### JavaScript Test Scripts
+
+The following JavaScript snippets represent test scripts written in Postman for automated testing of the Star Wars GraphQL API. These tests are designed to ensure the correctness and reliability of the API's responses.
+
+```javascript
+pm.test('Verifiy status code ', function () {
+    pm.response.to.have.statusCode(400)
+});
+pm.test('Verify error message', function () {
+    const error = pm.response.json().errors[0];
+    // Verifică mesajul de eroare
+    pm.expect(error.message).to.equal("Expected type Int, found \"2.0\".");
+})
+```
+# 5.Query all films with positive parameter 
+![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/QueryAllFilmPositivParamet.png)
+
+
+### JavaScript Test Scripts
+
+The following JavaScript snippets represent test scripts written in Postman for automated testing of the Star Wars GraphQL API. These tests are designed to ensure the correctness and reliability of the API's responses.
+
+```javascript
+pm.test('Query is successful', function () {
+    pm.response.to.be.ok;
+    pm.response.to.have.statusCode(200)
+});
+pm.test('Response has expected property', function () {
+    pm.expect(pm.response.json().data).to.have.property("allFilms")
+});
+pm.test('Response contains correct number of films', function () {
+    const responseBody = pm.response.json()
+    pm.expect(responseBody.data.allFilms.edges.length).to.equal(2);
+});
+pm.test('Fields are of correct type', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    films.forEach(film => {
+        pm.expect(film.node.episodeID).to.be.a('number');
+        pm.expect(film.node.releaseDate).to.be.a('string');
+        pm.expect(film.node.created).to.be.a('string');
+        pm.expect(film.node.edited).to.be.a('string');
+    })
+});
+
+pm.test('Verify title for every film', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    
+    // Verify first film
+    pm.expect(films[0].node.title).to.include("New Hope");
+
+    // Verifiy second film
+    pm.expect(films[1].node.title).to.include("The Empire Strikes Back")
+});
+
+})
