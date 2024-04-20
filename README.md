@@ -43,3 +43,63 @@ The application is intended for automated testing of the Star Wars GraphQL API. 
    ```bash
    newman run "TestsSwapiGrapQL.postman_collection.json"
    ```
+
+# Query 
+ 
+## 1. Query_film_with_positive_id_parameter
+
+![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/Screenshot%202024-04-20%20at%2011.50.34.png)
+
+### JavaScript Test Scripts
+
+The following JavaScript snippets represent test scripts written in Postman for automated testing of the Star Wars GraphQL API. These tests are designed to ensure the correctness and reliability of the API's responses.
+
+```javascript
+pm.test('Query is successful', function () {
+    pm.response.to.be.ok;
+    pm.response.to.have.statusCode(200);
+});
+
+pm.test('Response has expected property', function () {
+    pm.expect(pm.response.json().data).to.have.property("film");
+});
+
+pm.test('Verify title of film', function () {
+    const title = pm.response.json().data.film.title;
+    pm.expect(title).to.equals("The Empire Strikes Back");
+});
+
+pm.test('Verify id', function () {
+    const id = pm.response.json().data.film.id;
+    pm.expect(id).to.equals("ZmlsbXM6Mg==");
+});
+
+pm.test('Fields are of correct type', function () {
+    const film = pm.response.json().data.film;
+    pm.expect(film.episodeID).to.be.a('number');
+    pm.expect(film.openingCrawl).to.be.a('string');
+    pm.expect(film.created).to.be.a('string');
+    pm.expect(film.director).to.be.a('string');
+    pm.expect(film.producers).to.be.an('array');
+});
+
+```
+## 2. Query_film_with_inexisting_id_parameter
+
+![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/Screenshot%202024-04-20%20at%2011.50.39.png)
+
+### JavaScript Test Scripts
+
+The following JavaScript snippets represent test scripts written in Postman for automated testing of the Star Wars GraphQL API. These tests are designed to ensure the correctness and reliability of the API's responses.
+
+```javascript
+pm.test('Verify Response', function () {
+    pm.response.to.be.ok;
+    pm.response.to.have.statusCode(200)
+});
+pm.test('Verify error message for id ', function () {
+    const error = pm.response.errors[0];
+    // Verifică mesajul de eroare
+    pm.expect(error.message).to.equal("No valid ID extracted from ZmlsbXM6Mg");
+})
+```
