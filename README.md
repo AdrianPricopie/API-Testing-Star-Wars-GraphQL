@@ -103,3 +103,59 @@ pm.test('Verify error message for id ', function () {
     pm.expect(error.message).to.equal("No valid ID extracted from ZmlsbXM6Mg");
 })
 ```
+## 3.Query all films
+
+![Query](https://github.com/AdrianPricopie/API-Testing-Star-Wars-GraphQL/blob/main/README.md)
+
+### JavaScript Test Scripts
+
+The following JavaScript snippets represent test scripts written in Postman for automated testing of the Star Wars GraphQL API. These tests are designed to ensure the correctness and reliability of the API's responses.
+
+```javascript
+pm.test('Query is successful', function () {
+    pm.response.to.be.ok;
+    pm.response.to.have.statusCode(200)
+});
+pm.test('Response has expected property', function () {
+    pm.expect(pm.response.json().data).to.have.property("allFilms")
+});
+pm.test('Response contains correct number of films', function () {
+    const responseBody = pm.response.json()
+    pm.expect(responseBody.data.allFilms.edges.length).to.equal(6);
+});
+pm.test('Each film has correct fields', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    films.forEach(film => {
+        pm.expect(film.node).to.have.all.keys('title', 'episodeID', 'openingCrawl', 'director', 'producers', 'releaseDate', 'created', 'edited', 'id');
+    });
+});
+// Verificați dacă datele filmului sunt valide
+pm.test('Each film has valid data', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    films.forEach(film => {
+        // Verificați data de lansare
+        pm.expect(film.node.releaseDate).to.match(/^\d{4}-\d{2}-\d{2}$/);
+        
+        // Verificați dacă titlul și descrierea filmului nu sunt goale
+        pm.expect(film.node.title).to.not.be.empty;
+        pm.expect(film.node.openingCrawl).to.not.be.empty;
+    });
+});
+pm.test('Films are in expected order', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    const expectedOrder = ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "The Phantom Menace", "Attack of the Clones", "Revenge of the Sith"];
+    films.forEach((film, index) => {
+        pm.expect(film.node.title).to.equal(expectedOrder[index]);
+    });
+});
+pm.test('Fields are of correct type', function () {
+    const films = pm.response.json().data.allFilms.edges;
+    films.forEach(film => {
+        pm.expect(film.node.episodeID).to.be.a('number');
+        pm.expect(film.node.releaseDate).to.be.a('string');
+        pm.expect(film.node.created).to.be.a('string');
+        pm.expect(film.node.edited).to.be.a('string');
+    })
+});
+
+```
